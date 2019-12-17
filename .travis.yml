@@ -6,3 +6,16 @@ before_install:
   - docker build -t jwan/docker-react -f Dockerfile.dev .
 script:
   - docker run -e CI=true jwan/docker-react npm run test
+
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "docker-react"
+  env: "Docker-env"
+  bucket_name: "elasticbeanstalk-us-east-1-516088479088"
+  bucket_path: "docker-react"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
